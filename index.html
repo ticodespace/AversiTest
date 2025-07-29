@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="ka">
 <head>
-  <meta charset="UTF-8">
-  <title>Power BI ციკლური რეპორტი</title>
+  <meta charset="UTF-8" />
+  <title>Power BI რეპორტების ცვლა</title>
   <style>
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      background-color: #f8f8f8;
+      background: #f4f4f4;
       color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
     }
     h1 {
-      text-align: center;
+      margin-bottom: 20px;
     }
   </style>
+</head>
+<body>
+  <h1>Power BI რეპორტების ავტომატური ცვლა</h1>
+  <p>ახალი ფანჯარა გაიხსნება ყოველ 20 წამში</p>
+
   <script>
     const urls = [
       "https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare",
@@ -25,24 +31,21 @@
     ];
 
     let currentIndex = 0;
+    let reportWindow = null;
 
-    function goToNext() {
-      window.location.href = urls[currentIndex];
+    function openReport() {
+      if (reportWindow && !reportWindow.closed) {
+        reportWindow.close();
+      }
+      reportWindow = window.open(urls[currentIndex], "_blank");
+      currentIndex = (currentIndex + 1) % urls.length;
     }
 
-    window.onload = () => {
-      setTimeout(() => {
-        goToNext();
-      }, 100); // redirect to first report quickly
-    };
-
-    setInterval(() => {
-      currentIndex = (currentIndex + 1) % urls.length;
-      goToNext();
-    }, 20000); // every 20 seconds
+    // პირველი report გაიხსნას როცა user დააჭერს
+    document.body.addEventListener("click", () => {
+      openReport(); // გახსნის პირველს
+      setInterval(openReport, 20000); // ცვლის ყოველ 20 წამში
+    });
   </script>
-</head>
-<body>
-  <h1>იტვირთება Power BI რეპორტი...<br>გთხოვთ დაელოდოთ</h1>
 </body>
 </html>
