@@ -2,37 +2,27 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Wholesale Dashboard</title>
-  <style>
-    html, body {
-      margin: 0;
-      height: 100%;
-      overflow: hidden;
-    }
-    iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-  </style>
+  <title>Power BI Report Rotator</title>
+  <script>
+    const urls = [
+      "https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare",
+      "https://app.powerbi.com/links/w9r3LtJodj?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare"
+    ];
+
+    let currentIndex = 0;
+
+    window.onload = function () {
+      // Start with first report
+      window.location.href = urls[currentIndex];
+
+      // Rotate every 60 seconds
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % urls.length;
+        window.location.href = urls[currentIndex];
+      }, 60000);
+    };
+  </script>
 </head>
 <body>
-
-<iframe id="reportFrame" src="https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare"></iframe>
-
-<script>
-  const urls = [
-    "https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare",
-    "https://app.powerbi.com/links/w9r3LtJodj?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare"
-  ];
-
-  let currentIndex = 0;
-
-  setInterval(() => {
-    currentIndex = (currentIndex + 1) % urls.length;
-    document.getElementById("reportFrame").src = urls[currentIndex];
-  }, 60000); // 1 წუთი = 60,000 მილიწამი
-</script>
-
 </body>
 </html>
