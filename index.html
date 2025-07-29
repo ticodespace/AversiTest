@@ -1,28 +1,61 @@
 <!DOCTYPE html>
 <html lang="ka">
 <head>
-<meta charset="UTF-8" />
-<title>iframe ბმულების ცვლა</title>
+  <meta charset="UTF-8" />
+  <title>ბმულების ცვლა Fullscreen-ში</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: black;
+      overflow: hidden;
+    }
+
+    iframe {
+      border: none;
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+<iframe id="reportFrame"></iframe>
+
 <script>
   const links = [
-    "https://example.com/link1",
-    "https://example.com/link2"
-  ];
+  "https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare",
+      "https://app.powerbi.com/links/w9r3LtJodj?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare"
+    ];
 
   let currentIndex = 0;
+  const frame = document.getElementById("reportFrame");
 
-  function changeIframeSrc() {
-    document.getElementById("myFrame").src = links[currentIndex];
+  function changeReport() {
+    frame.src = links[currentIndex];
     currentIndex = (currentIndex + 1) % links.length;
   }
 
-  window.onload = function() {
-    changeIframeSrc();
-    setInterval(changeIframeSrc, 30000); // 30 წამში ერთხელ
+  // Fullscreen ფუნქცია
+  function openFullscreen() {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) { /* Safari */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) { /* IE11 */
+      elem.msRequestFullscreen();
+    }
   }
+
+  // ჩატვირთვისას იწყებს
+  window.onload = () => {
+    openFullscreen();          // შედის fullscreen რეჟიმში
+    changeReport();            // აჩვენებს პირველ ბმულს
+    setInterval(changeReport, 30000);  // ცვლის ყოველ 30 წამში
+  };
 </script>
-</head>
-<body>
-  <iframe id="myFrame" style="width:100%; height:500px;" frameborder="0"></iframe>
+
 </body>
 </html>
