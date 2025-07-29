@@ -22,8 +22,8 @@
 
 <script>
   const urls = [
-    "https://app.powerbi.com/view?r=eyJrIjoiZjI1MzEzMWYtOGQwNC00ODU0LWI3NDAtM2UyNzQ0MGNmNGZjIiwidCI6ImZiNWE4ZTU5LTg5YTktNDgyNC1hNDhlLTczNDcwM2NmMDlkNyIsImMiOjEwfQ%3D%3D",
-    "https://app.powerbi.com/view?r=eyJrIjoiZjI1MzEzMWYtOGQwNC00ODU0LWI3NDAtM2UyNzQ0MGNmNGZjIiwidCI6ImZiNWE4ZTU5LTg5YTktNDgyNC1hNDhlLTczNDcwM2NmMDlkNyIsImMiOjEwfQ%3D%3D"
+    "https://app.powerbi.com/view?r=eyJrIjoiM2MyZWRjYWEtNzVhMy00NzQ4LWIxMDgtOGVlNjQ1MDBiYzY4IiwidCI6ImZiNWE4ZTU5LTg5YTktNDgyNC1hNDhlLTczNDcwM2NmMDlkNyIsImMiOjEwfQ%3D%3D",
+    "https://app.powerbi.com/view?r=eyJrIjoiM2MyZWRjYWEtNzVhMy00NzQ4LWIxMDgtOGVlNjQ1MDBiYzY4IiwidCI6ImZiNWE4ZTU5LTg5YTktNDgyNC1hNDhlLTczNDcwM2NmMDlkNyIsImMiOjEwfQ%3D%3D"
   ];
 
   let currentIndex = 0;
@@ -31,7 +31,7 @@
   setInterval(() => {
     currentIndex = (currentIndex + 1) % urls.length;
     document.getElementById("reportFrame").src = urls[currentIndex];
-  }, 20000); // 1 წუთი = 60,000 მილიწამი
+  }, 10000); // 1 წუთი = 60,000 მილიწამი
 </script>
 
 </body>
