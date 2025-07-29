@@ -2,60 +2,78 @@
 <html lang="ka">
 <head>
   <meta charset="UTF-8" />
-  <title>ბმულების ცვლა Fullscreen-ში</title>
+  <title>Power BI რეპორტების ცვლა ერთ ფანჯარაში</title>
   <style>
-    html, body {
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       margin: 0;
-      padding: 0;
-      height: 100%;
-      background-color: black;
-      overflow: hidden;
+      color: #333;
     }
 
-    iframe {
-      border: none;
-      width: 100vw;
-      height: 100vh;
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-bottom: 20px;
+    }
+
+    p {
+      max-width: 400px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
-<iframe id="reportFrame"></iframe>
+  <button id="startBtn">რეპორტების ავტომატური გადართვა</button>
+  <p>დაჭირეთ ღილაკს, რომ გახსნათ რეპორტი ახალ ფანჯარაში და დაიწყოთ ავტომატური ცვლა ყოველ 20 წამში.</p>
 
-<script>
-  const links = [
-  "https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare",
+  <script>
+    const urls = [
+      "https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare",
       "https://app.powerbi.com/links/w9r3LtJodj?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare"
     ];
 
-  let currentIndex = 0;
-  const frame = document.getElementById("reportFrame");
+    let currentIndex = 0;
+    let reportWindow = null;
+    let intervalId = null;
 
-  function changeReport() {
-    frame.src = links[currentIndex];
-    currentIndex = (currentIndex + 1) % links.length;
-  }
+    document.getElementById('startBtn').addEventListener('click', () => {
+      // დახურე ძველი ფანჯარა თუ ჯერ კიდევ ღიაა
+      if (reportWindow && !reportWindow.closed) {
+        reportWindow.close();
+      }
 
-  // Fullscreen ფუნქცია
-  function openFullscreen() {
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-      elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) { /* Safari */
-      elem.webkitRequestFullscreen();
-    } else if (elem.msRequestFullscreen) { /* IE11 */
-      elem.msRequestFullscreen();
-    }
-  }
+      // გამოითვალე ეკრანის ზომა
+      const screenWidth = window.screen.availWidth;
+      const screenHeight = window.screen.availHeight;
 
-  // ჩატვირთვისას იწყებს
-  window.onload = () => {
-    openFullscreen();          // შედის fullscreen რეჟიმში
-    changeReport();            // აჩვენებს პირველ ბმულს
-    setInterval(changeReport, 30000);  // ცვლის ყოველ 30 წამში
-  };
-</script>
+      // გახსენი ახალი ფანჯარა თითქმის ფულსქრინზე
+      reportWindow = window.open(
+        urls[currentIndex],
+        '_blank',
+        `toolbar=no,scrollbars=yes,resizable=yes,width=${screenWidth},height=${screenHeight},top=0,left=0`
+      );
+      currentIndex = (currentIndex + 1) % urls.length;
+
+      // დაწყება ავტომატური ცვლის ყოველ 20 წამში
+      intervalId = setInterval(() => {
+        if (reportWindow && !reportWindow.closed) {
+          reportWindow.location.href = urls[currentIndex];
+          currentIndex = (currentIndex + 1) % urls.length;
+        } else {
+          clearInterval(intervalId);
+          alert('Power BI რეპორტის ფანჯარა დაიხურა — ავტომატური გადართვა შეჩერდა.');
+        }
+      }, 20000);
+    });
+  </script>
 
 </body>
 </html>
