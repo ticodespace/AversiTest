@@ -20,24 +20,24 @@
   </style>
   <script>
     const urls = [
-      "https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare",  // Replace with real link
-      "https://app.powerbi.com/links/w9r3LtJodj?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare"  // Replace with real link
+      "https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare",
+      "https://app.powerbi.com/links/w9r3LtJodj?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare"
     ];
 
     let currentIndex = 0;
 
-    // On load, redirect to the first report
     window.onload = function () {
+      // Redirect to the first link immediately
       setTimeout(() => {
         window.location.href = urls[currentIndex];
       }, 100);
     };
 
-    // Rotate every 60 seconds
+    // Rotate every 20 seconds (20,000 milliseconds)
     setInterval(() => {
       currentIndex = (currentIndex + 1) % urls.length;
       window.location.href = urls[currentIndex];
-    }, 60000);
+    }, 20000);
   </script>
 </head>
 <body>
