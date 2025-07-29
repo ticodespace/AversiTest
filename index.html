@@ -1,28 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Power BI Report Rotator</title>
+  <style>
+    body {
+      margin: 0;
+      background: #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+    }
+  </style>
   <script>
     const urls = [
-      "https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare",
-      "https://app.powerbi.com/links/w9r3LtJodj?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare"
+      "https://app.powerbi.com/links/wcjT7btfz7?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare",  // Replace with real link
+      "https://app.powerbi.com/links/w9r3LtJodj?ctid=663409bb-de88-42fe-ad3e-e64428b19b87&pbi_source=linkShare"  // Replace with real link
     ];
 
     let currentIndex = 0;
 
+    // On load, redirect to the first report
     window.onload = function () {
-      // Start with first report
-      window.location.href = urls[currentIndex];
-
-      // Rotate every 60 seconds
-      setInterval(() => {
-        currentIndex = (currentIndex + 1) % urls.length;
+      setTimeout(() => {
         window.location.href = urls[currentIndex];
-      }, 60000);
+      }, 100);
     };
+
+    // Rotate every 60 seconds
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % urls.length;
+      window.location.href = urls[currentIndex];
+    }, 60000);
   </script>
 </head>
 <body>
+  <h2>Loading Power BI Report...<br>Redirecting shortly.</h2>
 </body>
 </html>
