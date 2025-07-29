@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ka">
 <head>
-  <meta charset="UTF-8" />
-  <title>Power BI Report Rotator</title>
+  <meta charset="UTF-8">
+  <title>Power BI ციკლური რეპორტი</title>
   <style>
     body {
       margin: 0;
-      background: #f4f4f4;
+      font-family: Arial, sans-serif;
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
       color: #333;
     }
-    h2 {
+    h1 {
       text-align: center;
     }
   </style>
@@ -26,21 +26,23 @@
 
     let currentIndex = 0;
 
-    window.onload = function () {
-      // Redirect to the first link immediately
+    function goToNext() {
+      window.location.href = urls[currentIndex];
+    }
+
+    window.onload = () => {
       setTimeout(() => {
-        window.location.href = urls[currentIndex];
-      }, 100);
+        goToNext();
+      }, 100); // redirect to first report quickly
     };
 
-    // Rotate every 20 seconds (20,000 milliseconds)
     setInterval(() => {
       currentIndex = (currentIndex + 1) % urls.length;
-      window.location.href = urls[currentIndex];
-    }, 20000);
+      goToNext();
+    }, 20000); // every 20 seconds
   </script>
 </head>
 <body>
-  <h2>Loading Power BI Report...<br>Redirecting shortly.</h2>
+  <h1>იტვირთება Power BI რეპორტი...<br>გთხოვთ დაელოდოთ</h1>
 </body>
 </html>
