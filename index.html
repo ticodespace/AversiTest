@@ -15,12 +15,14 @@
       margin: 0;
       color: #333;
     }
+
     button {
       padding: 12px 24px;
       font-size: 16px;
       cursor: pointer;
       margin-bottom: 20px;
     }
+
     p {
       max-width: 400px;
       text-align: center;
@@ -43,24 +45,31 @@
     let intervalId = null;
 
     document.getElementById('startBtn').addEventListener('click', () => {
-      // თუ ფანჯარა უკვე ღიაა, დახურე
+      // დახურე ძველი ფანჯარა თუ ჯერ კიდევ ღიაა
       if (reportWindow && !reportWindow.closed) {
         reportWindow.close();
       }
 
-      // გახსნა ახალ ფანჯარაში
-      reportWindow = window.open(urls[currentIndex], '_blank');
+      // გამოითვალე ეკრანის ზომა
+      const screenWidth = window.screen.availWidth;
+      const screenHeight = window.screen.availHeight;
+
+      // გახსენი ახალი ფანჯარა თითქმის ფულსქრინზე
+      reportWindow = window.open(
+        urls[currentIndex],
+        '_blank',
+        `toolbar=no,scrollbars=yes,resizable=yes,width=${screenWidth},height=${screenHeight},top=0,left=0`
+      );
       currentIndex = (currentIndex + 1) % urls.length;
 
-      // ავტომატური გადართვა ყოველი 20 წამში
+      // დაწყება ავტომატური ცვლის ყოველ 20 წამში
       intervalId = setInterval(() => {
         if (reportWindow && !reportWindow.closed) {
           reportWindow.location.href = urls[currentIndex];
           currentIndex = (currentIndex + 1) % urls.length;
         } else {
-          // თუ ფანჯარა დახურულია, შეწყვიტე ცვლა
           clearInterval(intervalId);
-          alert('Power BI რეპორტის ფანჯარა დახურულია, ავტომატური გადართვა შეჩერდა.');
+          alert('Power BI რეპორტის ფანჯარა დაიხურა — ავტომატური გადართვა შეჩერდა.');
         }
       }, 20000);
     });
